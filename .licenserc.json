@@ -1,8 +1,6 @@
 {
   "**/*.go": "// Copyright 2024 BiocryptoID",
   "**/*.{js,jsx,ts,tsx}": "// Copyright 2024 BiocryptoID",
-  "**/*.{yml,yaml}": "# Copyright 2024 BiocryptoID",
-  "**/*.json": "// Copyright 2024 BiocryptoID",
   "**/*.{css,scss}": "/* Copyright 2024 BiocryptoID */",
   "**/*.{sh,bash}": "# Copyright 2024 BiocryptoID",
   "**/*.{html,htm}": "<!-- Copyright 2024 BiocryptoID -->",
