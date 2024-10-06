@@ -6,5 +6,5 @@
   "**/*.{css,scss}": "/* Copyright 2024 BiocryptoID */",
   "**/*.{sh,bash}": "# Copyright 2024 BiocryptoID",
   "**/*.{html,htm}": "<!-- Copyright 2024 BiocryptoID -->",
-  "**/*.sql": "-- Copyright 2024 BiocryptoID",
+  "**/*.sql": "-- Copyright 2024 BiocryptoID"
 }
