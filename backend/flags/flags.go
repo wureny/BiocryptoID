@@ -12,7 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package repository
+package flags
 
-type BiometricRepository struct {
+import "flag"
+
+var (
+	AWSAccessKeyID     string
+	AWSSecretAccessKey string
+	AWSGATEWAYURL      string
+)
+
+func init() {
+	flag.StringVar(&AWSAccessKeyID, "aws-access-key-id", "", "AWS Access Key ID")
+	flag.StringVar(&AWSSecretAccessKey, "aws-secret-access-key", "", "AWS Secret Access Key")
+	flag.StringVar(&AWSGATEWAYURL, "aws-gateway-url", "", "AWS Gateway URL")
 }
