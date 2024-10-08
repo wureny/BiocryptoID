@@ -15,7 +15,7 @@
 package main
 
 import (
-	"biocryptoID/Internal/api"
+	"biocryptoID/internal/api"
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
