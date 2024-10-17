@@ -15,7 +15,7 @@
 package main
 
 import (
-	"biocryptoID/internal/api"
+	"biocryptoID/internal/web"
 	"flag"
 	"github.com/aws/aws-lambda-go/lambda"
 )
@@ -23,5 +23,5 @@ import (
 func main() {
 	flag.Parse()
 
-	lambda.Start(api.HandlerRequest)
+	lambda.Start(web.HandlerRequest)
 }
