@@ -12,12 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package api
+package web
 
 // 生物特征注册的结构体
 type BiometricRegister struct {
+	FacialInfo   []byte `json:"facial_info"`
+	Name         string `json:"name"`
+	Birth        string `json:"birth"`
+	Sex          string `json:"sex"`
+	SecurityCode string `json:"security_code"`
 }
 
 // 生物特征认证的结构体
 type BiometricAuth struct {
+	Code       string `json:"code"`
+	DID        string `json:"did"`
+	FacialInfo []byte `json:"facial_info"`
+	Msg        string `json:"msg"`
 }
