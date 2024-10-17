@@ -18,10 +18,18 @@ import (
 	"biocryptoID/internal/web"
 	"flag"
 	"github.com/aws/aws-lambda-go/lambda"
+	"log/slog"
+	"os"
 )
 
 func main() {
 	flag.Parse()
+
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		AddSource: true,
+		Level:     slog.LevelInfo,
+	}))
+	slog.SetDefault(logger)
 
 	lambda.Start(web.HandlerRequest)
 }
