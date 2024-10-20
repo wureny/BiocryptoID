@@ -12,3 +12,7 @@
 
 * [Registration process](process-details/registration-process.md)
 * [Verification process](process-details/verification-process.md)
+
+***
+
+* [Innovation and security](innovation-and-security.md)
