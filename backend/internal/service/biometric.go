@@ -13,3 +13,18 @@
 // limitations under the License.
 
 package service
+
+import (
+	"biocryptoID/internal/web"
+	"context"
+)
+
+type BiometricService struct{}
+
+func HandleRegister(ctx context.Context, register web.BiometricRegister) error {
+	return nil
+}
+
+func HandleAuth(ctx context.Context, Auth web.BiometricAuth) error {
+	return nil
+}

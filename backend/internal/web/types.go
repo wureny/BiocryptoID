@@ -30,3 +30,17 @@ type BiometricAuth struct {
 	FacialInfo []byte `json:"facial_info"`
 	Msg        string `json:"msg"`
 }
+
+// VO register(前端传来的数据)
+type Register struct{}
+
+// VO auth(前端传来的数据)
+type Auth struct{}
+
+func ConvertRegisterToBiometricRegister(register Register) BiometricRegister {
+	return BiometricRegister{}
+}
+
+func ConvertAuthToBiometricAuth(auth Auth) BiometricAuth {
+	return BiometricAuth{}
+}
