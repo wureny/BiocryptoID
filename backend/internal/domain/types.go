@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package web
+package domain
 
 // 生物特征注册的结构体
 type BiometricRegister struct {

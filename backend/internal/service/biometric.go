@@ -15,16 +15,37 @@
 package service
 
 import (
-	"biocryptoID/internal/web"
+	"biocryptoID/flags"
+	"biocryptoID/internal/domain"
 	"context"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
+	"github.com/aws/aws-sdk-go-v2/service/rekognition"
 )
 
 type BiometricService struct{}
 
-func HandleRegister(ctx context.Context, register web.BiometricRegister) error {
+func HandleRegister(ctx context.Context, register domain.BiometricRegister) error {
+	cfg, err := config.LoadDefaultConfig(context.TODO(),
+		config.WithRegion("us-east-2"),
+		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
+			flags.AWSAccessKeyID,
+			flags.AWSSecretAccessKey,
+			"",
+		)),
+	)
+	if err != nil {
+		return err
+	}
+	cli := rekognition.NewFromConfig(cfg)
+	params := &rekognition.DetectFacesInput{
+		Image:      nil,
+		Attributes: nil,
+	}
+	_, err = cli.DetectFaces(context.TODO(), params)
 	return nil
 }
 
-func HandleAuth(ctx context.Context, Auth web.BiometricAuth) error {
+func HandleAuth(ctx context.Context, Auth domain.BiometricAuth) error {
 	return nil
 }

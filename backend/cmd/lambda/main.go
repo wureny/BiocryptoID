@@ -17,6 +17,7 @@ package main
 import (
 	"biocryptoID/internal/web"
 	"flag"
+	"fmt"
 	"github.com/aws/aws-lambda-go/lambda"
 	"log/slog"
 	"os"
@@ -30,6 +31,6 @@ func main() {
 		Level:     slog.LevelInfo,
 	}))
 	slog.SetDefault(logger)
-
+	fmt.Println("aaa")
 	lambda.Start(web.HandlerRequest)
 }

@@ -15,6 +15,7 @@
 package web
 
 import (
+	"biocryptoID/internal/domain"
 	"biocryptoID/internal/service"
 	"context"
 	"encoding/json"
@@ -32,7 +33,7 @@ func HandlerRequest(ctx context.Context, request events.APIGatewayProxyRequest) 
 		//将request中的body解析成Register结构体，调用convertRegisterToBiometricRegister函数
 		//从request中解析出Register结构体
 		body := request.Body
-		req := Register{}
+		req := domain.Register{}
 		err := json.Unmarshal([]byte(body), &req)
 		if err != nil {
 			return events.APIGatewayProxyResponse{
@@ -42,8 +43,9 @@ func HandlerRequest(ctx context.Context, request events.APIGatewayProxyRequest) 
 			}, nil
 		}
 		//将req转换成BiometricRegister
-		biometricRegister := ConvertRegisterToBiometricRegister(req)
+		biometricRegister := domain.ConvertRegisterToBiometricRegister(req)
 		err = service.HandleRegister(ctx, biometricRegister)
+	
 		if err != nil {
 			return events.APIGatewayProxyResponse{
 				Headers:    headres,
@@ -59,7 +61,7 @@ func HandlerRequest(ctx context.Context, request events.APIGatewayProxyRequest) 
 		}, nil
 	case "/auth":
 		body := request.Body
-		req := Auth{}
+		req := domain.Auth{}
 		err := json.Unmarshal([]byte(body), &req)
 		if err != nil {
 			return events.APIGatewayProxyResponse{
@@ -68,7 +70,7 @@ func HandlerRequest(ctx context.Context, request events.APIGatewayProxyRequest) 
 				StatusCode: 400,
 			}, nil
 		}
-		biometricAuth := ConvertAuthToBiometricAuth(req)
+		biometricAuth := domain.ConvertAuthToBiometricAuth(req)
 		err = service.HandleAuth(ctx, biometricAuth)
 		if err != nil {
 			return events.APIGatewayProxyResponse{
