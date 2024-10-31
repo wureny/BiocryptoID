@@ -14,5 +14,40 @@
 
 package repository
 
+import (
+	"biocryptoID/internal/awsconfig"
+	"biocryptoID/internal/domain"
+	"context"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
+)
+
 type BiometricRepository struct {
+}
+
+func UploadBiometric(info domain.BioInfo) error {
+	cfg, err := awsconfig.NewAWSConfig()
+	if err != nil {
+		return err
+	}
+	cli := s3.NewFromConfig(cfg)
+	keyMsg := "did"
+	bucket := "sss"
+	_, err = cli.PutObject(context.TODO(), &s3.PutObjectInput{
+		//TODO: flag,did
+		Bucket: &bucket,
+		Key:    &keyMsg,
+		Body:   info,
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func GetBiometric() error {
+	return nil
+}
+
+func UpdateBiometric() error {
+	return nil
 }

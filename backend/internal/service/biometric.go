@@ -13,3 +13,50 @@
 // limitations under the License.
 
 package service
+
+import (
+	"biocryptoID/internal/awsconfig"
+	"biocryptoID/internal/domain"
+	"biocryptoID/internal/repository"
+	"context"
+	"github.com/aws/aws-sdk-go-v2/service/rekognition"
+	"github.com/aws/aws-sdk-go-v2/service/rekognition/types"
+)
+
+type BiometricService struct{}
+
+func HandleRegister(ctx context.Context, register domain.BiometricRegister) error {
+	cfg, err := awsconfig.NewAWSConfig()
+	if err != nil {
+		return err
+	}
+	cli := rekognition.NewFromConfig(cfg)
+
+	image := types.Image{
+		Bytes:    register.FacialInfo,
+		S3Object: nil,
+	}
+	params := &rekognition.DetectFacesInput{
+		Image:      &image,
+		Attributes: nil,
+	}
+
+	output, err := cli.DetectFaces(context.TODO(), params)
+	if err != nil {
+		return err
+	}
+	info := domain.BioInfo{
+		Age:         20,
+		FaceDetails: output.FaceDetails,
+	}
+	// Upload to S3
+	err = repository.UploadBiometric(info)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func HandleAuth(ctx context.Context, Auth domain.BiometricAuth) error {
+	return nil
+}

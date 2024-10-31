@@ -12,21 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package web
+package awsconfig
 
-// 生物特征注册的结构体
-type BiometricRegister struct {
-	FacialInfo   []byte `json:"facial_info"`
-	Name         string `json:"name"`
-	Birth        string `json:"birth"`
-	Sex          string `json:"sex"`
-	SecurityCode string `json:"security_code"`
-}
+import (
+	"biocryptoID/flags"
+	"context"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
+)
 
-// 生物特征认证的结构体
-type BiometricAuth struct {
-	Code       string `json:"code"`
-	DID        string `json:"did"`
-	FacialInfo []byte `json:"facial_info"`
-	Msg        string `json:"msg"`
+func NewAWSConfig() (aws.Config, error) {
+	cfg, err := config.LoadDefaultConfig(context.TODO(),
+		config.WithRegion("us-east-2"),
+		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
+			flags.AWSAccessKeyID,
+			flags.AWSSecretAccessKey,
+			"",
+		)),
+	)
+	if err != nil {
+		return cfg, err
+	}
+	return cfg, nil
 }
