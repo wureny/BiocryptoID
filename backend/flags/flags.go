@@ -20,10 +20,12 @@ var (
 	AWSAccessKeyID     string
 	AWSSecretAccessKey string
 	AWSGATEWAYURL      string
+	AWSBUCKET          string
 )
 
 func init() {
 	flag.StringVar(&AWSAccessKeyID, "aws-access-key-id", "", "AWS Access Key ID")
 	flag.StringVar(&AWSSecretAccessKey, "aws-secret-access-key", "", "AWS Secret Access Key")
 	flag.StringVar(&AWSGATEWAYURL, "aws-gateway-url", "", "AWS Gateway URL")
+	flag.StringVar(&AWSBUCKET, "aws-bucket", "", "AWS Bucket")
 }

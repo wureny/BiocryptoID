@@ -15,34 +15,45 @@
 package service
 
 import (
-	"biocryptoID/flags"
+	"biocryptoID/internal/awsconfig"
 	"biocryptoID/internal/domain"
+	"biocryptoID/internal/repository"
 	"context"
-	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/rekognition"
+	"github.com/aws/aws-sdk-go-v2/service/rekognition/types"
 )
 
 type BiometricService struct{}
 
 func HandleRegister(ctx context.Context, register domain.BiometricRegister) error {
-	cfg, err := config.LoadDefaultConfig(context.TODO(),
-		config.WithRegion("us-east-2"),
-		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
-			flags.AWSAccessKeyID,
-			flags.AWSSecretAccessKey,
-			"",
-		)),
-	)
+	cfg, err := awsconfig.NewAWSConfig()
 	if err != nil {
 		return err
 	}
 	cli := rekognition.NewFromConfig(cfg)
+
+	image := types.Image{
+		Bytes:    register.FacialInfo,
+		S3Object: nil,
+	}
 	params := &rekognition.DetectFacesInput{
-		Image:      nil,
+		Image:      &image,
 		Attributes: nil,
 	}
-	_, err = cli.DetectFaces(context.TODO(), params)
+
+	output, err := cli.DetectFaces(context.TODO(), params)
+	if err != nil {
+		return err
+	}
+	info := domain.BioInfo{
+		Age:         20,
+		FaceDetails: output.FaceDetails,
+	}
+	// Upload to S3
+	err = repository.UploadBiometric(info)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

@@ -14,6 +14,8 @@
 
 package domain
 
+import "github.com/aws/aws-sdk-go-v2/service/rekognition/types"
+
 // 生物特征注册的结构体
 type BiometricRegister struct {
 	FacialInfo   []byte `json:"facial_info"`
@@ -25,10 +27,17 @@ type BiometricRegister struct {
 
 // 生物特征认证的结构体
 type BiometricAuth struct {
+	//额外保障did的安全
 	Code       string `json:"code"`
 	DID        string `json:"did"`
 	FacialInfo []byte `json:"facial_info"`
 	Msg        string `json:"msg"`
+}
+
+// 上传s3的结构体
+type BioInfo struct {
+	Age         int64              `json:"age"`
+	FaceDetails []types.FaceDetail `json:"face_details"`
 }
 
 // VO register(前端传来的数据)
@@ -43,4 +52,8 @@ func ConvertRegisterToBiometricRegister(register Register) BiometricRegister {
 
 func ConvertAuthToBiometricAuth(auth Auth) BiometricAuth {
 	return BiometricAuth{}
+}
+
+func (info BioInfo) Read(p []byte) (n int, err error) {
+	return 0, nil
 }
